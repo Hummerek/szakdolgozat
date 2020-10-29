@@ -1,25 +1,10 @@
-from DatabaseConstructor import DatabaseConstruct as DC
-from DecisionTreeClassifier import DecisionTreeClassifierClass as DTCC
-from StringWeightCalculator import StringWeightCalculatorClass as SWCC
-from SupportVectorMachineClassifier import SupportVectorMachineClassifierClass as SVMCC
+from Preprocessor import Preprocessor_class as pre
+from Encoder import Encoder_class as enc
+import sys
 
-weightsignificance = 10
+preprocessor_object = pre.Preprocessor_class(sys.argv[1], sys.argv[2])
+preprocessor_object.__process__()
+preprocessed_results = preprocessor_object.__get_preprocessed_data__()
 
-print("[Classihub] - Caching learning data.")
-DatabaseObject = DC.construct_database("D:/Szakdolgozat/nfr-20200323T145233Z-001/nfr/nfr.arff")
-
-print("[Classihub] - Caching questionnaire.")
-TestObject = DC.construct_database("D:/szakdolgozat/test.txt")
-
-print("[Classhub] - Preprocessing learning data.")
-DictionaryObject = SWCC.StringWeightCalculatorClass()
-DictionaryObject.__process_calculation__(DatabaseObject.DataRecordList, "SE", weightsignificance)
-
-print("[Classihub] - Running Decision Tree Classification.")
-DecisionTreeClassificationObject = DTCC.DecisionTreeClassifierClass()
-DecisionTreeClassificationObject.__classify__(DictionaryObject)
-DecisionTreeClassificationObject.__answer__(DictionaryObject, TestObject.DataRecordList, weightsignificance)
-
-#print("[Classihub] - Running Support Vector Machine Classification.")
-#SupportVectorMachineClassificationObject = SVMCC.SupportVectorMachineClassifierClass()
-#SupportVectorMachineClassificationObject.__calculate_coords__(DatabaseObject.DataRecordList, DictionaryObject)
+encoder_object = enc.Encoder_class(sys.argv[1], preprocessed_results)
+encoder_object.__process__()
