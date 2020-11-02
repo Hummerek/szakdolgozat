@@ -201,7 +201,7 @@
 4,'100% of merchant services representatives shall be able to successfully perform a follow up action on a dispute case on the first encounter after completing the training course.',US
 4,'The maximum wait time for a user navigating from one screen to another within the Disputes application shall be no more than 5 seconds.',PE
 4,'The Disputes application shall support 350 concurrent users without any degradation of performance in the application.',PE
-4,'The Disputes application shall be available 24x7x365  with the exception of the following scheduled maintenance windows.  Monday – Saturday 3:00am to 4:00am EST Sunday 1:00amd to 5:00am EST',O
+4,'The Disputes application shall be available 24x7x365  with the exception of the following scheduled maintenance windows.  Monday – Saturday 3:00am to 4:00am EST Sunday 1:00am to 5:00am EST',O
 4,'The Disputes application shall interface with the Statement Database. The Statement Database provides the transaction details to the Disputes System. All transaction details must be obtained from the Statement Database',O
 4,'The Disputes application shall interface with the Cardmember Information Database.  The Cardmember Information Database provides detailed information with regard to a cardmember.  All cardmember detail information must be obtained from the Cardmember Information Database.',O
 4,'The Disputes applications shall interface with the Merchant Information Database.  The Merchant Information Database provides detailed information with regard to the merchant. All merchant detail information shall be obtained from the Merchant Information Database.',O

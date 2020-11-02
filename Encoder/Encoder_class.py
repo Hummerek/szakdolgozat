@@ -32,6 +32,10 @@ class Encoder_class:
     for element in self.input_data:
       temp.append(self.__build_string__(element[0]))
     self.tfidf_data = vectorizer.fit_transform(temp)
+    feature_names = vectorizer.get_feature_names()
+    import pandas as pd
+    df = pd.DataFrame(self.tfidf_data.T.todense(), index=feature_names)
+    df.to_excel("kimenet.xlsx")
 
   def __build_string__(self, list):
     result = ""
