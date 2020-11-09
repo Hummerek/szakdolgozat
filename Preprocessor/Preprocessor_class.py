@@ -2,6 +2,7 @@ import nltk, re, pprint
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from Progressbar import Progressbar_class as pbc
 import json
 
 class Preprocessor_class:
@@ -37,7 +38,7 @@ class Preprocessor_class:
     self.normalized_tokens = []
     self.stop_words = []
     self.stopword_filtered = []
-    self.punctuation_marks_to_remove = [',', '.', '!', '?', ':', '(', ')', '@', '&', "$", "%", '#', '<', '>', "'", "•", "	", "-"]
+    self.punctuation_marks_to_remove = [',', '.', '!', '?', ':', '(', ')', '@', '&', "$", "%", '#', '<', '>', "'", "•", "	", "-", "'", "'s", "s'"]
     self.punctuation_marks_to_convert = ["/"]
     self.punctuation_filtered = []
     self.indicator_list = ["am", "pm", "k", "mb", "kb", "gb", "min", "m", "h", "s"]
@@ -68,9 +69,9 @@ class Preprocessor_class:
       print("[PRE-0001]: Configuration file is not in JSON format!")
   
   def __generate_raw_data__(self):
-    print("[PRE]: Generating raw data.")
-    skipping_lines = True
     try:
+      progressbar_object = pbc.Progressbar_class("[PRE]: Generating raw data:",40,self.__count_lines__(self.datafile),2)
+      skipping_lines = True
       with open(self.datafile, 'r') as inputfile:
         for line in inputfile.readlines():
           if(skipping_lines == False):
@@ -78,8 +79,14 @@ class Preprocessor_class:
             self.raw_data.append([strippedline])
           if(line.startswith("@DATA")):
             skipping_lines = False
+          progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       self.__preprocessor_error__("[PRE-0001]: Failed to read data file!")
+  
+  def __count_lines__(self, filename):
+    with open(filename, 'r') as file:
+      return len(file.readlines())
   
   def __load_stopword_list__(self):
     print("[PRE]: Loading stopword list.")
@@ -97,8 +104,7 @@ class Preprocessor_class:
         self.__load_stopword_list__()
 	  
   def __tokenize__(self):
-    print("[PRE]: Tokenizing.")
-    i = 1
+    progressbar_object = pbc.Progressbar_class("[PRE]: Tokenizing:",40,len(self.raw_data),2)
     try:
       for entry in self.raw_data:
         record = []
@@ -110,7 +116,8 @@ class Preprocessor_class:
             word_tokenize(element)
             record.append(element)
         self.tokens.append(record)
-        i += 1
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except LookupError:
       self.errorcount = self.errorcount + 1
       print("[PRE]: Looks like punctuation data is not available. Automatically downloading some for you.")
@@ -128,13 +135,15 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0005]: Unknown error during conversion of raw text to tokens!")
 
   def __normalize_tokens__(self):
-    print("[PRE]: Normalizing tokens.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Normalizing tokens:",40,len(self.tokens),2)
     try:
       for element in self.tokens:
         buffer = []
         for word in element:
           buffer.append(word.lower())
         self.normalized_tokens.append(buffer)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       if(len(self.tokens) == 0):
         self.__preprocessor_error__("[PRE-0006]: No tokens to normalize!")
@@ -142,7 +151,7 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0007]: Unknown error during normalization of tokens!")
 
   def __filter_stopwords__(self):
-    print("[PRE]: Filtering stopwords.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering stopwords:",40,len(self.normalized_tokens),2)
     try:
       for element in self.normalized_tokens:
         buffer = []
@@ -150,6 +159,8 @@ class Preprocessor_class:
           if(word not in self.stop_words):
             buffer.append(word)
         self.stopword_filtered.append(buffer)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       if(len(self.normalized_tokens) == 0):
         self.__preprocessor_error__("[PRE-0008]: Cannot filter stopwords, no words to filter!")
@@ -159,11 +170,13 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0010]: Unknown error during filtering stopwords!")
 		
   def __filter_punctuation_from_words__(self):
-    print("[PRE]: Filtering punctuation.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering punctuation:",40,len(self.stopword_filtered),2)
     try:
       for element in self.stopword_filtered:
         filtered = self.__filter_word__(element)
         self.punctuation_filtered.append(filtered)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       if(len(self.stopword_filtered) == 0):
         self.__preprocessor_error__("[PRE-0011]: No data to filter punctuation on!")
@@ -182,7 +195,7 @@ class Preprocessor_class:
     return filtered_entry
 	
   def __merge_numeric_tokens__(self):
-    print("[PRE]: Merging numeric tokens.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Merging numeric tokens:",40,len(self.punctuation_filtered),2)
     try:
       for element in self.punctuation_filtered:
         buffer = []
@@ -193,6 +206,8 @@ class Preprocessor_class:
           else:
             buffer.append(word)
         self.numeric_converted.append(buffer)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       if(len(self.punctuation_filtered) == 0):
         self.__preprocessor_error__("[PRE-0013]: Cannot merge numeric tokens, no tokens to work on!")
@@ -221,12 +236,14 @@ class Preprocessor_class:
     return result
  		
   def __POS_tag__(self):
-    print("[PRE]: POS-tagging.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: POS-tagging:",40,len(self.numeric_converted),2)
     try:
       for element in self.numeric_converted:
         pos_tagged_temp = nltk.pos_tag(self.__filter_empty_elements__(element))
         if(pos_tagged_temp != []):
           self.pos_tagged.append(pos_tagged_temp)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except LookupError:
       self.errorcount = self.errorcount + 1
       print("[PRE]: Looks like POS-tagging data is not available. Automatically downloading some for you.")
@@ -251,7 +268,7 @@ class Preprocessor_class:
     return result
 	
   def __lemmatize__(self):
-    print("[PRE]: Lemmatizing.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Lemmatizing:",40,len(self.pos_tagged),2)
     try:
       lemmatizer = WordNetLemmatizer()
       for entry in self.pos_tagged:
@@ -260,6 +277,8 @@ class Preprocessor_class:
           elementbuffer = (lemmatizer.lemmatize(element[0]), element[1])
           buffer.append(elementbuffer)
         self.lemmatized.append(buffer)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except LookupError:
       self.errorcount = self.errorcount + 1
       print("[PRE]: Looks like WordNetLemmatizer data is not available. Automatically downloading some for you.")
@@ -277,10 +296,12 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0020]: Unknown error during lemmatizing!")
 	
   def __finalize__(self):
-    print("[PRE]: Finalizing.")
+    progressbar_object = pbc.Progressbar_class("[PRE]: Finalizing:",40,len(self.lemmatized),2)
     try:
-      for i in range(len(self.lemmatized)):
-        self.preprocessed_structure.append([self.lemmatized[i],self.category[i]])
+      for j in range(len(self.lemmatized)):
+        self.preprocessed_structure.append([self.lemmatized[j],self.category[j]])
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except:
       if(len(self.lemmatized) == 0):
         self.__preprocessor_error__("[PRE-0021]: No data to finalize!")
@@ -293,7 +314,6 @@ class Preprocessor_class:
 	
   def __get_preprocessed_data__(self):
     if(self.preprocessed_structure!=[]):
-      print("[PRE]: Loaded preprocessed data.")
       return self.preprocessed_structure
     else:
       print("Result seems to be empty. Did you run __process__()?")
