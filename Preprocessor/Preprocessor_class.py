@@ -298,8 +298,8 @@ class Preprocessor_class:
   def __finalize__(self):
     progressbar_object = pbc.Progressbar_class("[PRE]: Finalizing:",40,len(self.lemmatized),2)
     try:
-      for j in range(len(self.lemmatized)):
-        self.preprocessed_structure.append([self.lemmatized[j],self.category[j]])
+      for i in range(len(self.lemmatized)):
+        self.preprocessed_structure.append([self.lemmatized[i],self.category[i]])
         progressbar_object.__update__()
       progressbar_object.__finalize__()
     except:
