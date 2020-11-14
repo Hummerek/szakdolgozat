@@ -16,9 +16,10 @@ class Progressbar_class:
   scale_info = 0
   prev_scale_info = 0
   inverted_scale = False
+  finalmessage=""
   
 
-  def __init__(self, title, width, limit, scale):
+  def __init__(self, title, width, limit, scale, finalmessage):
     self.title = title.ljust(40)
     self.width = width
     self.upper_limit = limit
@@ -31,6 +32,7 @@ class Progressbar_class:
     self.full_print_data_string = ""
     self.scale_precision = scale
     self.inverted_scale = False
+    self.finalmessage=finalmessage
     self.__calculate_scale__(self.scale_precision)
     self.scale_info = 0
     self.__update_scale_info__()
@@ -100,8 +102,11 @@ class Progressbar_class:
     sys.stdout.write("\b" * (len(self.full_print_data_string) + 2))
     sys.stdout.write(self.full_print_data_string)
     sys.stdout.flush()
-	
+
+  def __update_final_message__(self, message):
+    self.finalmessage = message
+
   def __finalize__(self):
     sys.stdout.write("\b" * len(self.details_string))
-    sys.stdout.write("Done.{0}\n".format(" " * (len(self.details_string)-3)))
+    sys.stdout.write("Done. {}{}\n".format(self.finalmessage, " " * (len(self.details_string)-(len(self.finalmessage)+3))))
     sys.stdout.flush()

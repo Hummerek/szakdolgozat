@@ -3,6 +3,7 @@ from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from matplotlib import pyplot
 import numpy as np
+import pandas as pd
 from scipy import spatial
 from sklearn.manifold import TSNE
 from Progressbar import Progressbar_class as pbc
@@ -14,6 +15,7 @@ class Encoder_class:
   configfile = ""
   input_data = []
   tfidf_data = []
+  tfidf_feature_names = []
   transformed_input_data = []
   transformed_without_POS = []
   gensim_embedded = []
@@ -27,6 +29,7 @@ class Encoder_class:
     self.configfile = configfile
     self.input_data = inputdata
     self.tfidf_data = []
+    self.tfidf_feature_names = []
     self.transformed_input_data = []
     self.transformed_without_POS = []
     self.gensim_embedded = []
@@ -38,9 +41,9 @@ class Encoder_class:
     self.__parse_configuration__()
     self.__process_tf_idf_vectorization__()
     self.__transform_input_data__()
-    self.__load_gensim_model__()
-    self.__load_glove_model__()
-    self.__create_embed_model_using_glove__()
+#    self.__load_gensim_model__()
+#    self.__load_glove_model__()
+#    self.__create_embed_model_using_glove__()
 	
   def __parse_configuration__(self):
     print("[ENC]: Parsing configuration file.")
@@ -51,18 +54,20 @@ class Encoder_class:
 
   def __process_tf_idf_vectorization__(self):
     vectorizer = TfidfVectorizer()
-    progressbar_object = pbc.Progressbar_class("[ENC]: TF-IDF vectorizing:", 40, len(self.input_data), 2)
+    progressbar_object = pbc.Progressbar_class("[ENC]: TF-IDF vectorizing:", 40, len(self.input_data), 2,"")
     temp = []
     for element in self.input_data:
-      temp.append(self.__build_string__(element[0]))
+      temp.append(self.__build_string__(element[0]) + " CATEGORY" + str(element[1]))
       progressbar_object.__update__()
     progressbar_object.__finalize__()
     self.tfidf_data = vectorizer.fit_transform(temp)
-    feature_names = vectorizer.get_feature_names()
-	#this could be configurable
-    #import pandas as pd
-    #df = pd.DataFrame(self.tfidf_data.T.todense(), index=feature_names)
-    #df.to_excel("kimenet.xlsx")
+    self.tfidf_feature_names = vectorizer.get_feature_names()
+    tempdata = []
+    for i in range(len(self.input_data)):
+      tempdata.append(""+str(i+1)+".req")
+    self.tfidf_data = pd.DataFrame(self.tfidf_data.todense(), index=tempdata, columns=self.tfidf_feature_names)
+    #this should be configurable
+    #self.tfidf_data.to_excel("kimenet.xlsx")
 	
   def __build_string__(self, list):
     result = ""
@@ -72,7 +77,7 @@ class Encoder_class:
     return result[:-1]
 	
   def __transform_input_data__(self):
-    progressbar_object = pbc.Progressbar_class("[ENC]: Transforming data:", 40, len(self.input_data), 2)
+    progressbar_object = pbc.Progressbar_class("[ENC]: Transforming data:", 40, len(self.input_data), 2,"")
     for line in self.input_data:
       convertedline = []
       converted_without_POS = []
@@ -106,7 +111,7 @@ class Encoder_class:
     #pyplot.show()
 	
   def __load_glove_model__(self):
-    progressbar_object = pbc.Progressbar_class("[ENC]: Loading GloVe vectors:", 40, self.__count_glove_model_size__(), 1)
+    progressbar_object = pbc.Progressbar_class("[ENC]: Loading GloVe vectors:", 40, self.__count_glove_model_size__(), 1,"")
     with open("glove.840B.300d.txt", 'r', encoding="utf-8") as f:
       for line in f:
         values = line.split(" ")
@@ -123,7 +128,7 @@ class Encoder_class:
     return count
 	
   def __create_embed_model_using_glove__(self):
-    progressbar_object = pbc.Progressbar_class("[ENC]: Creating GloVe model:", 40, len(self.transformed_without_POS), 2)
+    progressbar_object = pbc.Progressbar_class("[ENC]: Creating GloVe model:", 40, len(self.transformed_without_POS), 2,"")
     for line in self.transformed_without_POS:
       linedata = []
       for word in line:
@@ -137,10 +142,10 @@ class Encoder_class:
     progressbar_object.__finalize__()
 
   def __get_tfidf_data__(self):
-    if(self.tfidf_data != []):
+    if(len(self.tfidf_data) != 0):
       return self.tfidf_data
     else:
-      self.__encoder_error__("[ENC]: TF-IDF data seems to be empty. Did you run __process__()?")
+      self.__encoder_error__("[ENC]: TF-IDF data and/or feature name list seems to be empty. Did you run __process__()?")
 	  
   def __get_gensim_data__(self):
     if(self.gensim_embedded != []):

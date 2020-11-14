@@ -1,5 +1,6 @@
 from Preprocessor import Preprocessor_class as pre
 from Encoder import Encoder_class as enc
+from Classifier import Classifier_class as cla
 import sys
 
 class Classihub_class:
@@ -10,8 +11,10 @@ class Classihub_class:
   input_data_file = ""
   preprocessor_object = []
   encoder_object = []
+  classifier_object = []
   preprocessed_data = []
   tfidf_data = []
+  tfidf_feature_names = []
   gensim_data = []
   gensim_vocab_data = []
   glove_data = []
@@ -20,6 +23,7 @@ class Classihub_class:
     self.global_configuration_file = sys.argv[1]
     self.input_data_file = sys.argv[2]
     self.tfidf_data = []
+    self.tfidf_feature_names = []
     self.gensim_data = []
     self.gensim_vocab_data = []
     self.glove_data = []
@@ -32,8 +36,10 @@ class Classihub_class:
     self.__load_encoder_object__()
     self.__encode__()
     self.__obtain_tfidf_data__()
-    self.__obtain_gensim_data__()
-    self.__obtain_glove_data__()
+ #   self.__obtain_gensim_data__()
+ #   self.__obtain_glove_data__()
+    self.__load_classifier_object__()
+    self.classifier_object.__perform__()
 
   def __load_global_configuration_file__(self):
     print("[CHB]: Loading global configuration file.")
@@ -43,11 +49,11 @@ class Classihub_class:
       with open(self.global_configuration_file, "r") as file:
         for line in file.readlines():
           if(line.startswith("[PRE]:")):
-            preprocessor_config_file = line[7:]
+            preprocessor_config_file = line[7:].rstrip()
             print("Preprocessor config will be found in file " + preprocessor_config_file)
             pre_loaded = True
           if(line.startswith("[ENC]:")):
-            encoder_config_file = line[7:]
+            encoder_config_file = line[7:].rstrip()
             print("Encoder config will be found in file " + encoder_config_file)
             enc_loaded = True
       if(not(pre_loaded) or not(enc_loaded)):
@@ -81,13 +87,20 @@ class Classihub_class:
     print("[CHB]: Getting TF-IDF data.")
     self.tfidf_data = self.encoder_object.__get_tfidf_data__()
   
-  def __obtain_gensim_data__(self):
-    print("[CHB]: Getting Gensim data.")
-    self.gensim_data, self.gensim_vocab_data = self.encoder_object.__get_gensim_data__()
+#  def __obtain_gensim_data__(self):
+#    print("[CHB]: Getting Gensim data.")
+#    self.gensim_data, self.gensim_vocab_data = self.encoder_object.__get_gensim_data__()
   
-  def __obtain_glove_data__(self):
-    print("[CHB]: Getting GloVe data.")
-    self.glove_data = self.encoder_object.__get_glove_data__()
+#  def __obtain_glove_data__(self):
+#    print("[CHB]: Getting GloVe data.")
+#    self.glove_data = self.encoder_object.__get_glove_data__()
+	
+  def __load_classifier_object__(self):
+    print("[CHB]: Initalizing classifier.")
+    self.classifier_object = cla.Classifier_class()
+    self.classifier_object.__set_tfidf_database__(self.tfidf_data)
+#    self.classifier_object.__set_gensim_database__(self.gensim_data)
+#    self.classifier_object.__set_glove_database__(self.glove_data)
 
   def __classihub_error__(self, message):
     print(message)

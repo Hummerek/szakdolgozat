@@ -41,7 +41,7 @@ class Preprocessor_class:
     self.punctuation_marks_to_remove = [',', '.', '!', '?', ':', '(', ')', '@', '&', "$", "%", '#', '<', '>', "'", "•", "	", "-", "'", "'s", "s'"]
     self.punctuation_marks_to_convert = ["/"]
     self.punctuation_filtered = []
-    self.indicator_list = ["am", "pm", "k", "mb", "kb", "gb", "min", "m", "h", "s"]
+    self.indicator_list = ["am", "pm", "k", "mb", "kb", "gb", "min", "m", "h", "s", "day", "x", "way"]
     self.separator_list = ["x", ".", " ", ","]
     self.numeric_converted = []
     self.pos_tagged = []
@@ -70,7 +70,7 @@ class Preprocessor_class:
   
   def __generate_raw_data__(self):
     try:
-      progressbar_object = pbc.Progressbar_class("[PRE]: Generating raw data:",40,self.__count_lines__(self.datafile),2)
+      progressbar_object = pbc.Progressbar_class("[PRE]: Generating raw data:",40,self.__count_lines__(self.datafile),2,"")
       skipping_lines = True
       with open(self.datafile, 'r') as inputfile:
         for line in inputfile.readlines():
@@ -89,9 +89,12 @@ class Preprocessor_class:
       return len(file.readlines())
   
   def __load_stopword_list__(self):
-    print("[PRE]: Loading stopword list.")
     try:
-      self.stop_words = set(stopwords.words('english'))
+      progressbar_object = pbc.Progressbar_class("[PRE]: Loading stopword list:", 40,len(stopwords.words('english')),2,"")
+      for word in stopwords.words('english'):
+        self.stop_words.append(word)
+        progressbar_object.__update__()
+      progressbar_object.__finalize__()
     except LookupError:
       self.errorcount = self.errorcount + 1
       print("[PRE]: Looks like stopwords are not available. Automatically downloading some for you.")
@@ -104,7 +107,7 @@ class Preprocessor_class:
         self.__load_stopword_list__()
 	  
   def __tokenize__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Tokenizing:",40,len(self.raw_data),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Tokenizing:",40,len(self.raw_data),2,"")
     try:
       for entry in self.raw_data:
         record = []
@@ -135,7 +138,7 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0005]: Unknown error during conversion of raw text to tokens!")
 
   def __normalize_tokens__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Normalizing tokens:",40,len(self.tokens),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Normalizing tokens:",40,len(self.tokens),2,"")
     try:
       for element in self.tokens:
         buffer = []
@@ -151,7 +154,7 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0007]: Unknown error during normalization of tokens!")
 
   def __filter_stopwords__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering stopwords:",40,len(self.normalized_tokens),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering stopwords:",40,len(self.normalized_tokens),2,"")
     try:
       for element in self.normalized_tokens:
         buffer = []
@@ -170,7 +173,7 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0010]: Unknown error during filtering stopwords!")
 		
   def __filter_punctuation_from_words__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering punctuation:",40,len(self.stopword_filtered),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Filtering punctuation:",40,len(self.stopword_filtered),2,"")
     try:
       for element in self.stopword_filtered:
         filtered = self.__filter_word__(element)
@@ -187,7 +190,7 @@ class Preprocessor_class:
     filtered_entry = []
     for word in entry:
       for filter in self.punctuation_marks_to_remove:
-        word = word.replace(filter,' ')
+        word = word.replace(filter,'')
       for filter in self.punctuation_marks_to_convert:
         word = word.replace(filter,' ')
       word = word.strip()
@@ -195,7 +198,7 @@ class Preprocessor_class:
     return filtered_entry
 	
   def __merge_numeric_tokens__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Merging numeric tokens:",40,len(self.punctuation_filtered),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Merging numeric tokens:",40,len(self.punctuation_filtered),2,"")
     try:
       for element in self.punctuation_filtered:
         buffer = []
@@ -236,7 +239,7 @@ class Preprocessor_class:
     return result
  		
   def __POS_tag__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: POS-tagging:",40,len(self.numeric_converted),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: POS-tagging:",40,len(self.numeric_converted),2,"")
     try:
       for element in self.numeric_converted:
         pos_tagged_temp = nltk.pos_tag(self.__filter_empty_elements__(element))
@@ -268,12 +271,16 @@ class Preprocessor_class:
     return result
 	
   def __lemmatize__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Lemmatizing:",40,len(self.pos_tagged),2)
+    count = 0
+    for entry in self.pos_tagged:
+      count += len(entry)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Lemmatizing:",40,count+len(self.pos_tagged),2,"")
     try:
       lemmatizer = WordNetLemmatizer()
       for entry in self.pos_tagged:
         buffer = []
         for element in entry:
+          progressbar_object.__update__()
           elementbuffer = (lemmatizer.lemmatize(element[0]), element[1])
           buffer.append(elementbuffer)
         self.lemmatized.append(buffer)
@@ -296,7 +303,7 @@ class Preprocessor_class:
         self.__preprocessor_error__("[PRE-0020]: Unknown error during lemmatizing!")
 	
   def __finalize__(self):
-    progressbar_object = pbc.Progressbar_class("[PRE]: Finalizing:",40,len(self.lemmatized),2)
+    progressbar_object = pbc.Progressbar_class("[PRE]: Finalizing:",40,len(self.lemmatized),2,"")
     try:
       for i in range(len(self.lemmatized)):
         self.preprocessed_structure.append([self.lemmatized[i],self.category[i]])
