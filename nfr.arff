@@ -42,7 +42,7 @@
 
 @ATTRIBUTE ProjectID {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}
 @ATTRIBUTE RequirementText string
-@ATTRIBUTE class {F,A,L,LF,MN,O,PE,SC,SE,US,FT,PO}%Check and make sure that FT and PO should be there
+@ATTRIBUTE class {F(265),A(36),L(51),LF(38),MN(19),O(69),PE(70),SC(25),SE(117),US(125),FT(10),PO(5)}%Check and make sure that FT and PO should be there
 
 @DATA
 1,'The system shall refresh the display every 60 seconds.',PE
@@ -51,7 +51,7 @@
 1,'The product shall be available during normal business hours. As long as the user has access to the client PC  the system will be available 99% of the time during the first six months of operation.',A
 1,'If projected  the data must be understandable. On a 10x10 projection screen  90% of viewers must be able to determine that Events or Activities are occuring in current time from a viewing distance of 100',US
 1,'The product shall ensure that it can only be accessed by authorized users.  The product will be able to distinguish between authorized and unauthorized users in all access attempts',SE
-1,'The product shall be intuitive and self-explanatory.  :  90% of new users shall be able to start the display of Events or Activities within 90 minutes of using the product.',US
+1,'The product shall be intuitive and self-explanatory. : 90% of new users shall be able to start the display of Events or Activities within 90 minutes of using the product.',US
 1,'The product shall respond fast to keep up-to-date data in the display.',PE
 1,'The system shall have a MDI form that allows for the viewing of the graph and the data table.',F
 1,'The system shall display Events in a vertical table by time.',F
@@ -670,3 +670,164 @@
 15,'The intranet pages should display appropriately in all resolutions  from 800x600 and higher. The display of all the pages will be correct in 95% of the resolutions  prior to implementation. The remaining 5% will be corrected within a week of notification of the incorrect display.',LF
 15,'The users should be able to easily use the system to successfully complete their budgets  within the stipulated time for completion. With a week of training prior to product implementation  98% of the users shall complete their budgets within the stipulated time.',US
 15,'The product interface should be fast. The response time of the product interface should not exceed 2 seconds 90% of the time. For 10% of the time  the response time should not be more than 10 seconds.not be more than 10 seconds.',PE
+16,'The solution should provide detailed context-sensitive help material for all the possible actions and scenarios on all user interfaces in the application.',O
+16,'The help should be accessible to the users both in the offline and online mode',O
+16,'The solution should provide an interface for the user to log any defects or enhancement requests on the application and track thereafter.',O
+16,'The solution should send alerts (e.g. email SMS) to the user if the user chooses to whenever any action has been taken on the alert',O
+16,'The solution should enable the user to track the submitted defect or enhancement request.',O
+16,'The solution should enable the help-desk user to view the reports on the submitted defects or enhancement requests category-wise status-wise and agewise.',O
+16,'The support solution should be accessible to the users both from within the application and also outside the application through a browser interface.',O
+16,'The System must keep an unalterable audit trail capable of automatically capturing and storing information about all the actions (create/read/update/delete) that are taken upon the critical entities (case suspect property,…) in the system',SE
+16,'The System must keep an unalterable audit trail capable of automatically capturing and storing information about the user initiating and or carrying out the action',SE
+16,'The System must keep an unalterable audit trail capable of automatically capturing and storing information about the date and time of the event.',SE
+16,'The System must keep an unalterable audit trail capable of automatically capturing and storing information about administrative parameters',SE
+16,'Once the audit trail functionality has been activated the System must track events without manual intervention and store in the audit trail information about them.',SE
+16,'The System must maintain the audit trail for as long as required which will be at least for the life of the case to which it refers.',SE
+16,'The System must ensure that audit trail data is available for inspection on request so that a specific event can be identified and all related data made accessible and that this can be achieved by authorised external personnel who have little or no familiarity with the system.',SE
+16,'The System must be able to export audit trails for specified cases (without affecting the audit trail stored by the System). This functionality can be used by external auditors who wish to examine or analyse system activity.',SE
+16,'The System must be able to capture and store violations (i.e. A user’s attempts to access a case to which he is denied access) and (where violations can validly be attempted) attempted violations of access control mechanisms.',SE
+16,'The System must at a minimum be able to provide reports for actions on cases organised by case by user and in chronological sequence.',SE
+16,'The System should be able to provide reports for actions on cases organised by workstation and (where technically appropriate) by network address.',SE
+16,'The System must allow the user to limit access to cases to specified users or user groups.',SE
+16,'The system should provide for role-based control for the functionality within the system.',SE
+16,'The System must allow a user to be a member of more than one group.',SE
+16,'The System must allow only admin-users to set up user profiles and allocate users to groups.',SE
+16,'The System should allow a user to stipulate which other users or groups can access cases.',SE
+16,'The System must allow changes to security attributes for groups or users (such as access rights security level privileges password allocation and management) to be made only by super-user.',SE
+16,'If a user requests access to or searches for a case which he does not have the right to access the System must provide one of the following responses (selectable at configuration time): display title and metadata display the existence of a case but not its title or other metadata do not display any case information or indicate its existence in any way. These options are presented in order of increasing security. Note that the requirement in the third option (i.e. the most stringent) implies that the System must not include such cases in any count of search results; this level of security is normally appropriate for cases dealing with matters such as national security.',SE
+16,'If a user performs a quick or advanced search the System must never include in the search result list any record which the user does not have the right to access.',SE
+16,'If the System allows users to make unauthorised attempts to access cases it must log these in the audit trail.',SE
+16,'Any access to cases and all other activities involving the cases and related documents or data should also need to be stored in the audit trail to ensure legal admissibility and to assist in data recovery.',SE
+16,'All error messages produced by the System must be meaningful so that they can be appropriately acted upon by the users who are likely to see them. Ideally each error message will be accompanied by explanatory text and an indication of the action(s) which the user can take in response to the error.',US
+16,'The System must employ a single set of user interface rules or a small number of sets to provide a familiar and common look and feel for the application.',US
+16,'The System must be able to display several entities (cases suspects) simultaneously.',US
+16,'The interfaces must be made customizable or user-configurable to the extent possible. (e.g. the displayed columns in the table move resize modify the appearance). Such configurations must be saved in the user profile.',US
+16,'The System user interface must be suitable for users with special needs; that is compatible with specialist software that may be used and with appropriate interface guidelines',US
+16,'The System must provide End User and Administrator functions which are easy to use and intuitive throughout.',US
+16,'The System must allow persistent defaults for data entry where desirable. These defaults should include user-definable values values same as previous item and values derived from context e.g. date file reference and user identifier',US
+16,'Frequently-executed System transactions must be designed so that they can be completed with a small number of interactions (e.g. mouse clicks).',US
+16,'Where the System employs a graphical user interface it must allow users to customise it. Customisation should include but need not be limited to the following changes: menu contents layout of screens use of function keys on-screen colours fonts and font sizes',US
+16,'The user interfaces should be designed to make them user-intuitive.',US
+16,'The user interfaces of the system should comply with Standard ISO 9241.',US
+16,'ICT accessibility: ISO 9241-20 shall be the standard for guidance on ICT accessibility. Application user interfaces to meet its requirements and recommendations. Software accessibility ISO 9241-171 shall be the standard for guidance on software accessibility. User interfaces should meet its requirements and recommendations. Content accessibility WCAG 1.0 shall be the standard used for guidance on content accessibility. The application logo to be available on all pages as a link to the home page.',US
+16,'Providing text equivalents for non-text media objects: All non-text media objects such as graphical images or video should be provided with alternative equivalent textual descriptions and/or with equivalent text-based functionality.',US
+16,'Making navigation self-descriptive: Navigation should be designed to help users understand where they are where they have been and where they can go next. General guidance on achieving self-descriptiveness is given in ISO 9241-110.',US
+16,'Showing users where they are: Each presentation segment (page or window) should provide the user with a clear and sufficient indication of where he or she is in the navigation structure and of the current segment position with respect to the overall structure.',US
+16,'Offering alternative access paths: Alternative access paths for navigating to a specific unit of content should be offered to support different navigation strategies.',US
+16,'Minimizing navigation effort: The number of navigation steps needed to reach a certain piece of content should be minimized as long as different mental models navigation strategies and tasks of the user are taken into account.',US
+16,'Splash screens should be avoided unless they provide useful content or feedback about the application state to the user. If a splash screen is used a navigation option to skip it should be offered.',US
+16,'Avoiding opening unnecessary windows: Additional windows such as new browser windows or pop-up windows should only be opened if this supports the user’s task.',US
+16,'Vertical scrolling should be minimized. This may be done by placing important information at the top and providing links to information that is further down the page. Horizontal scrolling should be avoided wherever possible.',US
+16,'Designing for input device independence: User interfaces should be designed to allow activation of controls by a variety of input devices. The ability to choose between different input devices for activating controls such as links fields and buttons is important both for users who prefer a certain input mode mobile users and users with disabilities. In general device independence can be achieved if the functionality is operable via a keyboard.',US
+16,'Making user interfaces robust: User interfaces should be designed to be as robust as possible in the face of changing technology. This encompasses being able to present content containing newer technologies by older user agents as well as designing content to be usable with future technologies.',US
+16,'Acceptable opening / download times: Application pages should be designed and implemented so that there are acceptable opening times and download times for the expected range of technical contexts of use (e.g. bandwidth between the application and the user). This is particularly important for frequently accessed pages or pages that are important for user navigation and exploration such as the home page.',US
+16,'Minimizing user errors: Potential user errors as well as the effort needed to recover from errors should be minimized.',US
+16,'Providing clear error messages: The content of error messages shown on the pages or special error pages should clearly state the reason why the error occurred and if possible actions the user can take to resolve the error. Users expect error messages to be in the same language as the user interface.',US
+16,'Using appropriate formats units of measurement or currency: When designing user interfaces for use by diverse groups input and output of information elements such as currency units of measurement temperatures date and time phone numbers address or postal codes should be designed so that they are usable.',US
+16,'Making text resizable by the user: Text should be able to be resized by the user using functions provided by the user agent or other appropriate means i.e. see ISO 9241-171.',US
+16,'Text quality: The quality of textual content with respect to spelling and grammar should be sufficient so as not to impede readability.',US
+16,'Writing style: The reading and understanding of the textual content on the screen should be supported by suitable means including the use of short sentences the division of the text into shorter chunks or the presentation of content items in the form of bullet points.',US
+16,'Supporting text skimming: Fast skimming of text should be supported by the provision of clear links bulleted lists highlighted keywords logical headings and short phrases and sentences.',US
+16,'Readability of text: Text presented on the pages should be readable taking into account the expected display characteristics and spatial arrangement. ISO 9241-303 shall be consulted for screen text legibility requirements.',US
+16,'Distinguishable within-page links: Within-page links should be clearly distinguishable from other links that lead to a different page. EX. Within-page links are shown with dashed rather than solid underlines',US
+16,'Avoiding link overload: Text pages containing large proportions of links should be formatted so that the presence of links does not impede the readability of the text.',US
+16,'Using familiar terminology for navigation links: Navigation links — particularly links representing the main navigation structure — should be labelled with terms that are familiar to the user based on his/her general knowledge prior experience in the application domain or experience of using other systems.',US
+16,'Using descriptive link labels: The target or purpose of a link should be directly indicated by its label avoiding generic labels such as "go" or "click here" except where the purpose of the link is clear from its context on the page or the labels have commonly understood semantics in the particular application domain. Using appropriate terminology specific to the user’s tasks and information needs is important for making the content easy to understand.',US
+16,'Marking links opening new windows: Links that open new browser windows or pop-up windows should be clearly marked.',US
+16,'Distinguishing navigation links from controls: Navigation links should be clearly distinguishable from controls activating some action. Typical action types in user interfaces include manipulating application data performing searches communication actions such as opening a new e-mail window or starting a chat function and Hpresentation-related actions such as sorting a list of search results.',US
+16,'Providing printable document versions: If a document is either too long dispersed over several pages or in a specific layout that is not suitable for online reading a printer-friendly version of the document should be provided that prints the content in a form acceptable to the user (e.g. in the expected layout paper format or orientation).',US
+16,'Use of "white space": "White space" on a page i.e. space filled only with the background color should be used in such a way that it does not impair the visual skimming of the page. While white space is an important means of visually organizing the different content elements on a page if the distance between the blocks of information displayed becomes too large rapid skimming of the page can be impeded.',US
+16,'Selecting appropriate page lengths The length of a page should be selected so as to support the primary purpose and use of the page. Short pages are generally more appropriate for homepages navigation pages or overview pages that need to be read quickly. Longer pages can be more appropriate when users want to read the content without interruptions or when the page needs to match a paper counterpart.',US
+16,'Using colour: Colour should be used with care taking into account human capabilities and restrictions in perceiving colour and not as the only means of conveying information. Color should never be the only means of coding. Some users may have difficulties in perceiving certain colors or color combinations (color-blindness).',US
+16,'Using frames with care: If frames are used care should be taken to avoid possible problems. When frames are used it is important to title each frame and to describe its purpose and how frames relate to one another other.',US
+16,'Providing alternatives to frame-based presentation: If frames are used an alternative way of presenting relevant information without frames should be provided. Providing alternative text-only pages: When style sheets and/or frames are turned off it should be possible for the user to read and understand the page; alternatively the user should be provided with an equivalent alternative text-only page.',US
+16,'Consistent page layout: Pages should be designed using consistent layout schemes supporting the user in finding similar information at the same position on different pages. Overall layout schemes apply to all pages and are preferable when all pages have a similar structure. Frequently however different pages have different purposes and types of content. In such cases pages can usually be grouped in different categories using one layout scheme for each category consistently.',US
+16,'Placing title information consistently: Page titles should be placed in a consistent location on the different pages.',US
+16,'Observing principles of human perception When designing application pages the general principles of human perception should be taken into account. The International Standards mentioned below shall be consulted for guidance. Practical guidelines for presenting information to the user are to be found in ISO 9241-12. Guidance on selecting and using different forms of interaction techniques is to be found in ISO 9241-14 to ISO 9241-17. ISO 9241-14 gives guidance about menus ISO 9241-15 about command dialogues ISO 9241-16 about direct manipulation and ISO 9241-17 about forms. In addition when designing multimedia information presentations the design principles and recommendations described in ISO 14915-1 to ISO 14915-3 should be taken into account. Appropriate content presentation also plays a key role in accessibility.',US
+16,'Linking back to the home page or landmark pages: Each page should contain a link leading to the home page of the application or to a landmark page that is easy to recognize for the user.',US
+16,'Providing a site map: A separate navigation overview such as a site map should be provided for application showing the structure of the site in an overview form.',US
+16,'Consistency between navigation components and content: If navigation components (or overviews) are shown in conjunction with associated content consistency between the navigation component and the content shown should be maintained by indicating in the navigation component (e.g. highlighting) the topic currently visible in the content area.',US
+16,'Placing navigation components consistently: Navigation components should be placed consistently on the pages or in the framesets in the pages of the application.',US
+16,'Individualization and user adaptation : Adapting the content and the navigation of a user interface to individual users or user groups can be a useful mechanism for providing information that is of interest to the users and for making access to relevant information more efficient. User adaptation can also be important for making the user interface more accessible. Different approaches can be used for achieving these goals like providing users with means for customizing the user interface to their personal needs i.e. individualization designing content and navigation differently for varying user groups or roles i.e. such as employees of different levels citizens etc monitoring the user’s behaviour and adapting to the user’s goals that are inferred from the behaviour observed recommending information that is potentially more relevant or interesting to the specific user based on the behaviour of all users or a user group.',US
+16,'Taking account of the users’ tasks and information needs: When providing different access paths or navigation structures for different user groups the tasks and information needs of these user groups should be taken into consideration.',US
+16,'Making individualization and adaptation evident: It should be made evident to the user when individualization and/or adaptation are used.',US
+16,'Making user profiles evident: If predefined user profiles or user-specified profiles are used for individualizing or adapting content the profile currently used should be made evident. If profiles are used it is important to provide users with information about this concept and its implications.',US
+16,'Allowing users to see and change profiles: If user-specified profiles are used users should be able to see modify and delete that profile on demand.',US
+16,'The user interfaces of the system should follow the guidelines specified under www.usability.gov',US16,'The System must be available to users: from <00:00> to <24:00> on <all weekdays/340 days per year>.',A
+16,'The planned downtime for the System must not exceed <102> hours per <rolling three month period>. The System is considered to be down if any user is unable to perform any normal System function and if this failure is attributed to any component of the System other than the workstation.',A
+16,'Unplanned downtime for the System must not exceed <10 hours> per <rolling three month period>.',A
+16,'The number of incidents of unplanned downtime for the System must not exceed <4> per <rolling three month period>.',A
+16,'In the event of any software or hardware failure it must be possible to restore the System (with inline synchronization) within no more than <12> hours.',A
+16,'The system should be designed to have satisfactory performance even in Police Stations connected on low-bandwidth',PE
+16,'The system should be built on a common User Access and Authentication Service to ensure Single-Sign on for the end-user',SE
+16,'The system should be developed to be deployed in a 3-tier datacenter architecture',SC
+16,'The system should be designed to have a n-tier architecture with the presentation logic separated from the business logic that is again separated from the data-access logic',MN
+16,'The system should adopt standardized formats and common metadata elements',PO
+16,'The system should support multi-tier authentication where required',SE
+16,'The system should support SSL encrypted connections',SE
+16,'The system should support secure virtual private network connections',SE
+16,'The system should use HTTPS as the communication protocol i.e. HTTP over an encrypted secure socket layer (SSL).',SE
+16,'The system should support selective encryption of the stored data.',SE
+16,'The system should ensure secure transmission of data over the network and utilize SSL and 2-way digital signatures.',SE
+16,'The system should prevent cross-site scripting.',SE
+16,'The system should validate the incoming data / user request.',SE
+16,'The system should encode the incoming data / user request.',SE
+16,'The system should prevent SQL Injection.',SE
+16,'The system should utilize parameterized queries.',SE
+16,'The system should sanitize the user-inputs.',SE
+16,'The system should validate the data both at the client and server.',SE
+16,'The system should not allow hard delete and perform only soft tagging the row for deletion.,SE
+16,'The system should ensure high scalability and performance through use of cache for storing frequent data.',PE
+16,'The system should ensure high scalability and performance through use of AJAX based technology to improve user experience. Aggressive page loading to be considered based on the screen and estimate usage pattern.',PE
+16,'The system should ensure high scalability and performance through use of leverage Asynchronous HTTP socket capabilities of web server for scalability and performance.',SC
+16,'The system should ensure high scalability and performance trough hosting all the static content (documents images) on the web server.',SC
+16,'The search results should be fetched from the database in batches of 10 or 20 maximum as configured within the application.',PE
+16,'The system should ensure high scalability and performance through displaying records on the screen in batches/paged manner.',SC
+16,'The system should ensure high scalability and performance through fetching only the search result fields that need to be displayed to the user. Only when the user clicks on a particular record to view its further details should a query be fired to fetch the additional details for this particular record only.',PE
+16,'A hierarchical cache should be configured and used for caching of results of most frequently used searches.',PE
+16,'Database Indexes should be applied on the key columns used for searching.',PE
+17,'It is mandatory that learning time is between 2 to 4 hours at maximum because many task are delegated to working students.',US
+17,'Web interface should use clear and consistence terminology in such a way that the user with basic experience on internet and office finds the application easy to use',US
+17,'The Application should be available always at working hours. Any maintenance or backup operation should be conducted out of working time',A
+17,'The Application should be installed in any Microsoft or Unix platform',PO
+17,'Web application should available to run on browsers like IE Firefox Chrome Opera or Safari.',PO
+17,'All user are authenticated by user name and a password',SE
+17,'Permission are assigned to user according to their roles',SE
+17,'Only IT team member can access and maintain data base servers locally',SE
+17,'Query is killed if takes more than 1 min',SE
+17,'Backup operation are executed periodically',SE
+17,'It is important to design system to facilitated future evolution and facilitate maintenance operations',MN
+18,'To guarantee maximum availability of the control system retry procedures must be embodied in the software in case of error or failure (e.g. time-out hardware failure) to achieve recovery on-line whenever possible.',A
+18,'Should recovery also fail the error or failure has to be reported in a clear form (to identify the cause of the problem) and the system shall put itself into a safe state whenever a safety aspect might be involved.',A
+18,'To avoid unnecessary downtime it must be possible for the system to reconfigure itself in order to continue observing in a different mode if required given the failure of a single non-critical subsystem.',A
+18,'To increase software robustness range checking and validity checking shall be supported before execution of any input command. This must be possible ahead of time preparing observing sequences for automatic observations and simulating observations to estimate results.',A
+18,'On-line pre-checking of the operational status of equipment should be done prior to sending critical or time consuming commands. It must be possible to apply continuous monitoring to all subsystems on request both when in operation and when idle to check their operational status.',A
+18,'A measure of fault rates should be done during commissioning to establish baseline rates for system reliability monitoring.',A
+18,'There are to be recovery procedures to restart after error failure.',A
+18,'The system should be constantly monitoring active subsystems to be sure they are operating correctly before sending command to each subsystem. This monitoring should continue on inactive subsystems.',A
+18,'The goal for recover and/or reconfiguration is 5 minutes from onset of the error condition to observing again.',A
+18,'software limits - the software will not allow unsafe actions; the command will be rejected',SE
+18,'soft limit switches - the software will detect unsafe areas and halt; the software will allow movement off of soft limits',SE
+18,'software watch dogs - the software will halt if its watch dog has not been reset',SE
+18,'hardware watch dogs - the system will halt if its watch dog has not been reset,SE
+18,'hard limit switches - these switches will remove power from actuator when beyond soft limits; the software/electrical systems will allow movement off of hard limits,SE
+18,'hardware interlocks - these will prevent both software and hardware from action - there will be no bypass of these systems,SE
+18,'hard stops - the mechanism cannot move beyond this point due to mechanical limit(s). In general hard stops will use dampers to avoid damage to equipment.,SE
+19,'PDFsam is an application that needs a few system resources to work. This is designed not to delay the system from other key processes. The response time of the program is direct and the application is considered real-time.',PE
+19,'The system can check for updates whenever is requested by the user or automatically when opening the application. In this way PDFsam will be always up-to-date with all new supported features and bug fixes.',PE
+20,'The system encrypts data over a direct connection between the web client and the server.',SE
+20,'The system allows for the backup of the data system to local or remote non-volatile storage systems. Incremental backups should not create outages and full backups do not interfere with user interaction for more than 10 minutes.',SE
+20,'The system is configurable to e-mail warnings about multiple failed login attempts from the same user. These warnings are sent to the System Administrator. Other security risks of this type are the responsibility of the System Administrator.',SE
+20,'The system allows only valid users to log into the system. A valid user is one which has not been disabled or deleted and exists on the system.',SE
+20,'To log onto the system a user provides their valid username and password.',SE
+20,'The system uses the configured authentication module. The authentication method is configurable by the System Administrator.',SE
+20,'The system allows the System Administrator to configure a timeout after which a user is automatically logged out of Mashbot.',SE
+21,'The HATS-GUI shall display and SDT with 10,000 nodes in five seconds or less.',PE
+21,'The HATS-GUI shall display 1,000,000 node SDTs in the same amount of time plus or minus two seconds as it takes to display a 10,000 node SDT.',PE
+21,'The HATS-GUI shall allow a user to request transformations while HATS-SML is performing transformations or parsing.',PE
+21,'The HATS-GUI shall allow a user to navigate through the display of an SDT with 10,000 nodes so that scrolling a screen width with any portion of the SDT displayed takes less than 3 seconds.',PE
+21,'The complexity of the text search algorithm shall not exceed O(n2) for n nodes.',PE
+21,'The complexity of the tree search algorithm shall not exceed O(n2) for n nodes.',PE
+21,'The complexity of the scrolling algorithms for text and displayed graphs shall not exceed O(n2) for n displayed nodes.',PE
+21,'The user shall not be required to log in or authenticate his/her identity when using the system.',SE
+21,'The GUI shall run on Windows 2000 Sun Solaris 8 and Linux operating systems without modification of the Java code.',PO

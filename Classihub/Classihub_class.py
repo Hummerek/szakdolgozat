@@ -36,10 +36,10 @@ class Classihub_class:
     self.__load_encoder_object__()
     self.__encode__()
     self.__obtain_tfidf_data__()
- #   self.__obtain_gensim_data__()
- #   self.__obtain_glove_data__()
+    self.__obtain_gensim_data__()
+    self.__obtain_glove_data__()
     self.__load_classifier_object__()
-    self.classifier_object.__perform__()
+    self.__classify__()
 
   def __load_global_configuration_file__(self):
     print("[CHB]: Loading global configuration file.")
@@ -87,20 +87,24 @@ class Classihub_class:
     print("[CHB]: Getting TF-IDF data.")
     self.tfidf_data = self.encoder_object.__get_tfidf_data__()
   
-#  def __obtain_gensim_data__(self):
-#    print("[CHB]: Getting Gensim data.")
-#    self.gensim_data, self.gensim_vocab_data = self.encoder_object.__get_gensim_data__()
+  def __obtain_gensim_data__(self):
+    print("[CHB]: Getting Gensim data.")
+    self.gensim_data, self.gensim_vocab_data = self.encoder_object.__get_gensim_data__()
   
-#  def __obtain_glove_data__(self):
-#    print("[CHB]: Getting GloVe data.")
-#    self.glove_data = self.encoder_object.__get_glove_data__()
+  def __obtain_glove_data__(self):
+    print("[CHB]: Getting GloVe data.")
+    self.glove_data = self.encoder_object.__get_glove_data__()
 	
   def __load_classifier_object__(self):
-    print("[CHB]: Initalizing classifier.")
+    print("[CHB]: Initializing classifier.")
     self.classifier_object = cla.Classifier_class()
+	
+  def __classify__(self):
+    print("[CHB]: Performing classification.")
     self.classifier_object.__set_tfidf_database__(self.tfidf_data)
-#    self.classifier_object.__set_gensim_database__(self.gensim_data)
-#    self.classifier_object.__set_glove_database__(self.glove_data)
+    self.classifier_object.__set_gensim_database__(self.gensim_data)
+    self.classifier_object.__set_glove_database__(self.glove_data)
+    self.classifier_object.__perform__()
 
   def __classihub_error__(self, message):
     print(message)

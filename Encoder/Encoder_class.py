@@ -41,9 +41,9 @@ class Encoder_class:
     self.__parse_configuration__()
     self.__process_tf_idf_vectorization__()
     self.__transform_input_data__()
-#    self.__load_gensim_model__()
-#    self.__load_glove_model__()
-#    self.__create_embed_model_using_glove__()
+    self.__load_gensim_model__()
+    self.__load_glove_model__()
+    self.__create_embed_model_using_glove__()
 	
   def __parse_configuration__(self):
     print("[ENC]: Parsing configuration file.")

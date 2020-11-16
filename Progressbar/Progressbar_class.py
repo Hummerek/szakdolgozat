@@ -17,12 +17,17 @@ class Progressbar_class:
   prev_scale_info = 0
   inverted_scale = False
   finalmessage=""
+  progress_step = 0
   
 
   def __init__(self, title, width, limit, scale, finalmessage):
     self.title = title.ljust(40)
     self.width = width
     self.upper_limit = limit
+    self.progress_step = 1
+    if(limit < 130):
+      self.upper_limit *= 2
+      self.progress_step = 2
     self.progress_unit = int(self.upper_limit/(self.width+1))
     self.progress = 0
     self.percentage = 0.0
@@ -44,7 +49,7 @@ class Progressbar_class:
     sys.stdout.write("\b" * (self.width+len(self.title)+1))
 	
   def __update__(self):
-    self.current_progress += 1
+    self.current_progress += self.progress_step
     self.__update_scale_info__()
     if((self.inverted_scale == True) or (self.inverted_scale == False and (int(self.scale_info) != int(self.prev_scale_info)))):
       self.__update_percentage__()
@@ -95,7 +100,7 @@ class Progressbar_class:
     self.bar_string += "]"
 	
   def __update_details__(self):
-    self.details_string = "" + str(self.percentage) + "% (" + str(self.current_progress) + "/" + str(self.upper_limit) + ")"
+    self.details_string = "" + str(self.percentage) + "% (" + str(int(self.current_progress/self.progress_step)) + "/" + str(int(self.upper_limit/self.progress_step)) + ")"
 
   def __display__(self):
     self.full_print_data_string = "" + self.title + self.bar_string + self.details_string
