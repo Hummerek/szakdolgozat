@@ -1,6 +1,7 @@
 from Preprocessor import Preprocessor_class as pre
 from Encoder import Encoder_class as enc
 from Classifier import Classifier_class as cla
+from ClassiGUI import ClassiGUI_class as clagui
 import sys
 
 class Classihub_class:
@@ -18,6 +19,7 @@ class Classihub_class:
   gensim_data = []
   gensim_vocab_data = []
   glove_data = []
+  guiobject = []
 
   def __init__(self):
     self.global_configuration_file = sys.argv[1]
@@ -27,6 +29,8 @@ class Classihub_class:
     self.gensim_data = []
     self.gensim_vocab_data = []
     self.glove_data = []
+    self.guiobject = clagui.ClassiGUI_class(self)
+    self.guiobject.__process__()
 
   def __process__(self):
     self.__load_global_configuration_file__()
@@ -69,7 +73,8 @@ class Classihub_class:
 	
   def __preprocess__(self):
     print("[CHB]: Preprocessing input data.")
-    self.preprocessor_object.__process__()
+    print("Sending data of type " + str(type(self.guiobject)))
+    self.preprocessor_object.__process__(self.guiobject)
 	
   def __obtain_preprocessed_data__(self):
     print("[CHB]: Getting preprocessed data.")
@@ -81,7 +86,7 @@ class Classihub_class:
 
   def __encode__(self):
     print("[CHB]: Encoding preprocessed data.")
-    self.encoder_object.__process__()
+    self.encoder_object.__process__(self.guiobject)
 	
   def __obtain_tfidf_data__(self):
     print("[CHB]: Getting TF-IDF data.")
@@ -104,7 +109,7 @@ class Classihub_class:
     self.classifier_object.__set_tfidf_database__(self.tfidf_data)
     self.classifier_object.__set_gensim_database__(self.gensim_data)
     self.classifier_object.__set_glove_database__(self.glove_data)
-    self.classifier_object.__perform__()
+    self.classifier_object.__perform__(self.guiobject)
 
   def __classihub_error__(self, message):
     print(message)
