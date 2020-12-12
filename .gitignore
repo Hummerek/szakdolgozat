@@ -1,3 +1,6 @@
 */__pycache__
 glove.840B.300d.txt
 *.chb
+*~
+~*
+glove*.txt
